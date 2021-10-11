@@ -7,7 +7,7 @@ Queue-Fair can be added to any web server easily in minutes.  You will need a Qu
 
 Most of our customers prefer to use the Client-Side JavaScript Adapter, which is suitable for all sites that wish solely to protect against overload.
 
-To add the Queue-Fair Client-Side JavaScript Adapter to your web server, you don't need the cs files included in this extension.
+To add the Queue-Fair Client-Side JavaScript Adapter to your web server, you don't need the files included in this extension.
 
 Instead, add the following tag to the `<head>` section of your pages:
  
@@ -90,7 +90,7 @@ Go back to the Portal and put the queue in Demo mode on the Queue Settings page.
  - If the Adapter is in Safe mode, also verify that the QueueFair-Store cookie has not changed its value.
  - Hit Refresh.  Verify that you are not queued again.  Verify that the cookies have not changed their values.
 
-**IMPORTANT:**  Once you are sure the Server-Side Adapter is working as expected, you may remove the Client-Side JavaScript Adapter tag from your pages, and don't forget to disable debug level logging in `QueueFairConfig.cs`, and also set `settingsFileCacheLifetimeMinutes` to at least 5.
+**IMPORTANT:**  Once you are sure the Server-Side Adapter is working as expected, you may remove the Client-Side JavaScript Adapter tag from your pages, and don't forget to disable debug level logging by setting `QueueFairConfig.debug` to false, and also set `QueueFairConfig.settingsFileCacheLifetimeMinutes` to at least 5.
 
 **IMPORTANT:**  Responses that contain a Location header or a Set-Cookie header from the Adapter must not be cached!  You can check which cache-control headers are present using your browser's Inspector Network Tab.
 
