@@ -39,7 +39,7 @@ This guide assumes you already have a functional Java web server. Tomcat is used
 
 **2.** Copy lib/queuefairadapter.jar somewhere that your JVM can find it in the Classpath.  On Tomcat, you can put it in /path/to/tomcat/lib or /path/to/tomcat/webapps/your_webapp/WEB-INF/lib.
 
-**3.** The library requires GSON to parse JSON from the Queue-Fair servers.  So, add lib/gson-2.8.6.jar to the same folder as 2. above.
+**3.** The library requires GSON to parse JSON from the Queue-Fair servers.  So, add https://queue-fair.com/adapters/gson-2.8.6.jar to the same folder as 2. above.
 
 **4.** Copy queue-fair-adapter.jsp to somewhere in your webapp.  Edit it and (at a minimum) enter your Account System Name and Secret from the Queue-Fair Portal where specified in that file.
 
