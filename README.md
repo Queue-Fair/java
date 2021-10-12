@@ -1,7 +1,7 @@
 ---
 ## Queue-Fair Java Adapter README & Installation Guide
 
-Queue-Fair can be added to any web server easily in minutes.  You will need a Queue-Fair account - please visit https://queue-fair.com/free-trial if you don't already have one.  You should also have received our Technical Guide.
+Queue-Fair can be added to any web server easily in minutes.  You will need a Queue-Fair account - please visit https://queue-fair.com/free-trial if you don't already have one.  You should also have received our Technical Guide.  You can find out all about Queue-Fair at https://queue-fair.com
 
 ## Client-Side JavaScript Adapter
 
