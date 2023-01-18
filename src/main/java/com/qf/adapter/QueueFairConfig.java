@@ -18,7 +18,7 @@ public class QueueFairConfig {
 
 	//Time limit for Passed Strings to be considered valid,
 	//before and after the current time.  Make sure your system clock is accurately set!
-	public static int queryTimeLimitSeconds = 30;
+	public static int queryTimeLimitSeconds = 300;
 
 	//Valid values are true, false, or an "IP_address".
 	public static boolean debug = false;
