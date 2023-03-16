@@ -3,7 +3,7 @@
 //Comment out or remove the line below to disable debug level logging.
 QueueFairConfig.debug=true;
 
-//You must set these
+//You must set these to the values shown on the Account -> Your Account page of the Portal.
 QueueFairConfig.account="REPLACE_WITH_YOUR_ACCOUNT_SYSTEM_NAME";
 QueueFairConfig.accountSecret="REPLACE_WITH_YOUR_ACCOUNT_SECRET";
 
