@@ -41,7 +41,7 @@ This guide assumes you already have a functional Java web server. Tomcat is used
 
 **3.** The library requires GSON to parse JSON from the Queue-Fair servers.  So, add https://queue-fair.com/adapters/gson-2.10.1.jar to the same folder as 2. above.
 
-**4.** Copy queue-fair-adapter.jsp to somewhere in your webapp.  Edit it and (at a minimum) enter your Account System Name and Secret from the Queue-Fair Portal where specified in that file.
+**4.** Copy queue-fair-adapter.jsp to somewhere in your webapp.  Edit it and (at a minimum) enter your Account System Name and Secret from the Queue-Fair Portal where specified in that file.  If you are using Spring, you can instead use the example Filter or Interceptor code in the src/main/spring folder of this distribution.
 
 **5.** Note the `settingsFileCacheLifetimeMinutes` setting - this is how often your web server will check for updated settings from the Queue-Fair queue servers (which change when you hit Make Live).   The default value is 5 minutes.  You can set this to -1 to disable local caching but **DON'T DO THIS** on your production machine/live queue with real people, or your server may collapse under load.  On download, your settings are parsed and stored in a memory cache.  If you restart your webserver a fresh copy will be downloaded.
 
@@ -51,7 +51,7 @@ This guide assumes you already have a functional Java web server. Tomcat is used
 
 On tomcat, the debug logging statements will appear in /path/to/tomcat/logs/catalina.out .  The debug loglevel is Level.INFO, so you need your logging to be this level or lower to see them.
 
-**8.** When you have finished making changes to `queue-fair-adapter.jsp`, save it.
+**8.** When you have finished making changes to `queue-fair-adapter.jsp`, save it.  If you are using Spring, you will need to set up the two @Values.
 
 **NOTE:** If your web server is sitting behind a proxy, CDN or load balancer, you may need to edit the adapter.remoteIPAddress, adapter.requestedURL and adapter.userAgent property sets that occur in queue-fair-adapter.jsp before the isContinue() method is called to use values from forwarded headers instead.  If you need help with this, contact Queue-Fair support.  You may also need to create your own QueueFairService implementation - see below.
 
@@ -60,7 +60,7 @@ On tomcat, the debug logging statements will appear in /path/to/tomcat/logs/cata
 
 <%@ include file="queue-fair-adapter.jsp" %>
 
-It's normally placed at the end of the very first line in the JSP page, so that no characters are output before the adapter is run - so immediately after the opening <%@ page ... > tag.
+It's normally placed at the end of the very first line in the JSP page, so that no characters are output before the adapter is run - so immediately after the opening <%@ page ... > tag.  For Spring implementations, consult your implementation documentation for instructions on how to add the Filter or Interceptor.
 
 In the case where the Adapter sends the request elsewhere (for example to show the user a queue page), the `isContinue()` method will return false and the rest of the page will NOT be generated, which means it isn't sent to the visitor's browser, which makes it secure, as well as preventing your server from having to do the work of producing the rest of the page.  It is important that this code runs *before* any other framework you may have in place initialises so that your server can perform this under load, when your full site framework is too onerous to load.
 
@@ -109,7 +109,7 @@ In many cases it is better to use the Client-Side Javascript Adapter to send and
 
 ## If you are NOT using Tomcat
 
-The example code in queue-fair-adapter.jsp will work with any other servlet container too, such as JBoss.
+The example code in queue-fair-adapter.jsp will work with any other servlet container too, such as JBoss, or you can use the Filter or Interceptor code in the spring folder.
 
 To ensure compatibility with the widest possible range of Java environments, QueueFairAdapter encapsulates all interations with the HTTP response into an object that implements the interface QueueFairService.  The included QueueFairServletService class should be used so long as you have HttpServletRequest and HttpServletResponse objects available with which to instantiate it.
 
