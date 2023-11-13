@@ -22,8 +22,11 @@ import java.util.regex.Pattern;
 @Component
 public class QueueFairFilter extends OncePerRequestFilter {
 
-    @Value("${queuefair.accesskey}")
-    private String queuefairAccessKey;
+    @Value("${queuefair.accountSecret}")
+    @Value("${queuefair.accountSystemName}")
+
+    private String queuefairAccountSecret;
+    private String queueFairAccountSystemName;
     private final Logger logger = LoggerFactory.getLogger(QueueFairFilter.class);
     public static final Pattern SKIP_PATTERN = Pattern.compile("REGEX_HERE");
 
@@ -42,8 +45,8 @@ public class QueueFairFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } else {
             //You must set these to the values shown on the Account -> Your Account page of the Portal.
-            QueueFairConfig.account = "ravensburger";
-            QueueFairConfig.accountSecret = queuefairAccessKey;
+            QueueFairConfig.account = queuefairAccountSystemName;
+            QueueFairConfig.accountSecret = queuefairAccountSecret;
 
             //The following are default values and can be commented out.
             QueueFairConfig.queryTimeLimitSeconds = 30;        //How long a PassedString may be turned into a PassedCookie.  Make sure your system clock is set to network time!
