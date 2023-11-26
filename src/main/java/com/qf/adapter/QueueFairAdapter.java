@@ -1075,9 +1075,14 @@ public class QueueFairAdapter extends BaseAdapter {
                 if (QueueFairConfig.debug)
                     log.info("QF Query validation failed - redirecting to error page.");
 
+                String target = requestedURL;
+                i = requestedURL.indexOf("qfqid=");
+                if(i != -1) {
+                	target = target.substring(0,i);
+                }
                 String loc = QueueFairConfig.protocol + "://" + queue.queueServer + "/" + queue.name
-                        + "?qfError=InvalidQuery";
-
+                        + "?qfError=InvalidQuery&target="+urlencode(target);
+                
                 redirect(loc, 1);
                 return;
             }
