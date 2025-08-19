@@ -15,8 +15,14 @@ QueueFairConfig.stripPassedString = true; ////Whether or not to strip the Passed
 QueueFairConfig.adapterMode=QueueFairConfig.MODE_SAFE;	//Whether to send the visitor to the Adapter server for counting (MODE_SIMPLE), or consult the Adapter server (MODE_SAFE).  The recommended value is MODE_SAFE.
 QueueFairConfig.useThreadLocal=false;	//For maximum performance, set this to true BUT ONLY IF your web server uses a fixed thread pool and does NOT create new worker threads once its size is reached.
 
-//Do not comment out the below.
-QueueFairAdapter adapter=QueueFairAdapter.getAdapter(new QueueFairServletService(request,response)); 
+//Create a service for the Adapter to use.  The following is for Jakarta-based servlet containers (Tomcat 10+)
+QueueFairService service = new QueueFairJakartaServletService(request,response);
+
+//The following is if you are using javax.servlet-servlet containers (Tomcat 9 and below)
+//QueueFairService service = new QueueFairServletService(request,response);
+
+//Now make the Adapter object
+QueueFairAdapter adapter=QueueFairAdapter.getAdapter(service); 
 
 //You may need to amend these if your web server is behind a Proxy or CDN.		
 adapter.remoteIPAddress = request.getRemoteAddr();
@@ -50,4 +56,5 @@ if(!adapter.isContinue()) {
 }
 
 %>
+
 
