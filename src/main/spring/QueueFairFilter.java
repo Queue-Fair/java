@@ -3,18 +3,31 @@
 
 import com.qf.adapter.QueueFairAdapter;
 import com.qf.adapter.QueueFairConfig;
-import com.qf.adapter.QueueFairServletService;
-import org.jetbrains.annotations.NotNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/* These imports for Spring Boot 3 / Tomcat 10 */
+import jakarta.annotation.Nonnull;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import com.qf.adapter.QueueFairJakartaServletService;
+
+/* These imports for Spring Boot 2 / Tomcat 9 */
+/* 
+import org.jetbrains.annotations.NotNull;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.qf.adapter.QueueFairServletService;
+*/
+
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +39,7 @@ public class QueueFairFilter extends OncePerRequestFilter {
     @Value("${queuefair.accountSystemName}")
 
     private String queuefairAccountSecret;
-    private String queueFairAccountSystemName;
+    private String queuefairAccountSystemName;
     private final Logger logger = LoggerFactory.getLogger(QueueFairFilter.class);
     public static final Pattern SKIP_PATTERN = Pattern.compile("REGEX_HERE");
 
@@ -56,8 +69,11 @@ public class QueueFairFilter extends OncePerRequestFilter {
             QueueFairConfig.adapterMode = QueueFairConfig.MODE_SAFE;    //Whether to send the visitor to the Adapter server for counting (MODE_SIMPLE), or consult the Adapter server (MODE_SAFE).  The recommended value is MODE_SAFE.
             QueueFairConfig.useThreadLocal = false;    //For maximum performance, set this to true BUT ONLY IF your web server uses a fixed thread pool and does NOT create new worker threads once its size is reached.
 
-            //Do not comment out the below.
-            QueueFairAdapter adapter = QueueFairAdapter.getAdapter(new QueueFairServletService(request, response));
+            //For Spring Boot 3 / Tomcat 10+
+            QueueFairAdapter adapter = QueueFairAdapter.getAdapter(new QueueFairJakartaServletService(request, response));
+
+            //For Spring Boot 2 / Tomcat 9
+            // QueueFairAdapter adapter = QueueFairAdapter.getAdapter(new QueueFairServletService(request, response));
 
             //You may need to amend these if your web server is behind a Proxy or CDN.
             adapter.remoteIPAddress = request.getRemoteAddr();
