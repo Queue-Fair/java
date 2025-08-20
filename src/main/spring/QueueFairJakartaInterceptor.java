@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class QueueFairJakartaInterceptor implements HandlerInterceptor {
 
-    private static final Logger logger = LoggerFactory.getLogger(QueueFairInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(QueueFairJakartaInterceptor.class);
     public static final Pattern SKIP_PATTERN = Pattern.compile("REGEX_HERE");
 
     private final String queuefairAccountSecret;
